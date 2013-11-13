@@ -7,7 +7,16 @@ rm -fr /var/webconfig/*
 cp ./lib/* /var/webconfig
 chown -R www-data:www-data /var/webconfig
 juju-log "Installing packages"
-apt-get install -y apache2 php5 mysql-client php5-mysql php5-mcrypt ttf-dejavu-core ucf debconf-utils
+apt-get install -y apache2 php5 mysql-client curl php5-mysql php5-mcrypt php5-curl ttf-dejavu-core ucf debconf-utils
+
+# Installing composer globally
+juju-log "Installing Composer Package Manager"
+curl -s http://getcomposer.org/installer | php
+mv composer.phar /usr/local/bin/composer
+
+# Installing codeception globally
+juju-log "Installing Codeception Testing Framework"
+curl -s http://codeception.com/codecept.phar > /usr/local/bin/codecept
 
 # Configure apache
 juju-log "Enabling apache modules: rewrite, vhost_alias, php5"
